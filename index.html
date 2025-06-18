@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle POS Device Web</title>
+    <link rel="icon" type="image/png" href="logo_bcw.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center w-100">
+                <img src="logo_bcw.png" alt="Logo BCW" height="60" class="me-3 ms-2">
+                <h3 class="text-white p-1 mb-0">Controle POS Device</h3>
+                <h5 id="estoque-devices" class="text-white mb-0 ms-auto me-2">
+                    <i class="bi bi-box-seam"></i> : 
+                    <span id="qtd-estoque" style="font-size: 2rem; font-weight: bold;">...</span>
+                </h5>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid">
+        <!-- Modal para Edição/Criação de Dispositivo -->
+        <div class="modal fade" id="editCreateModal" tabindex="-1" aria-labelledby="editCreateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCreateModalLabel">Criando disposotivo:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deviceForm">
+                            <div id="deviceSerialDisplay" class="mb-3">
+                                <label for="serialNumber" class="form-label">Número de Série</label>
+                                <input type="text" class="form-control" id="creatingSerialNumber" required>
+                            </div>
+                            <div id="deviceLogicalDisplay" class="mb-3">
+                                <label for="logicalNumber" class="form-label">Número Lógico</label>
+                                <input type="text" class="form-control" id="creatingLogicalNumber" required>
+                            </div>
+                            <div id="deviceReciveDateDisplay" class="mb-3">
+                                <label for="reciveDate" class="form-label">Data de Recebimento</label>
+                                <input type="date" class="form-control" id="creatingReciveDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="creatingStatus" required>
+                                    <option value="2">Em estoque</option>
+                                    <option value="1">Em circulação</option>
+                                    <option value="4">Com defeito</option>
+                                    <option value="3">Realizado troca</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="changeReason" class="form-label">Defeito</label>
+                                <select class="form-select" id="creatingChangeReason" required>
+                                    <option value="0">Nenhum</option>
+                                    <option value="1">Tela quebrada</option>
+                                    <option value="2">Tampa quebrada</option>
+                                    <option value="3">Lentidão</option>
+                                    <option value="4">Duplicando ingresso</option>
+                                    <option value="5">Impressora quebrada</option>
+                                    <option value="6">Sofreu queda</option>
+                                    <option value="7">Bateria</option>
+                                    <option value="8">Leitor de cartão</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="protocol" class="form-label">Protocolo</label>
+                                <input type="text" class="form-control" id="creatingProtocol">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exitDate" class="form-label">Data de Saída</label>
+                                <input type="date" class="form-control" id="creatingExitDate">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" id="btn-save-device">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Tabela-->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="bi bi-upc-scan"></i> Número de Série</th>
+                                <th><i class="bi bi-123"></i> Número Lógico</th>
+                                <th><i class="bi bi-calendar-check"></i> Data Recebimento</th>
+                                <th><i class="bi bi-toggle-on"></i> Status</th>
+                                <th><i class="bi bi-exclamation-triangle"></i> Defeito</th>
+                                <th><i class="bi bi-file-text"></i> Protocolo</th>
+                                <th><i class="bi bi-calendar-x"></i> Data Saída</th>
+                                <th><i class="bi bi-gear"></i> Ações</th>
+                            </tr>
+                            <tr class="table-dark">
+                                <td><input type="text" class="form-control form-control-sm" id="filteringSerialNumber" placeholder="Filtrar série"></td>
+                                <td><input type="text" class="form-control form-control-sm" id="filteringLogicalNumber" placeholder="Filtrar lógico"></td>
+                                <td><input type="date" class="form-control form-control-sm" id="filteringReciveDate"></td>
+                                <td>
+                                    <select class="form-select form-select-sm" id="filteringStatus">
+                                        <option value="">Todos</option>
+                                        <option value="2">Em estoque</option>
+                                        <option value="1">Em circulação</option>
+                                        <option value="4">Com defeito</option>
+                                    <option value="3">Realizado troca</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select form-select-sm" id="filteringChangeReason">
+                                        <option value="">Todos</option>
+                                        <option value="0">Nenhum</option>
+                                        <option value="7">Bateria</option>
+                                        <option value="4">Duplicando ingresso</option>
+                                        <option value="5">Impressora quebrada</option>
+                                        <option value="3">Lentidão</option>
+                                        <option value="8">Leitor de cartão</option>
+                                        <option value="6">Sofreu queda</option>
+                                        <option value="2">Tampa quebrada</option>
+                                        <option value="1">Tela quebrada</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" id="filteringProtocol" placeholder="Filtrar protocolo"></td>
+                                <td><input type="date" class="form-control form-control-sm" id="filteringExitDate"></td>
+                                <td class="d-flex gap-2">
+                                    <button id="btn-create" class="btn btn-secondary btn-sm d-flex align-items-center gap-1 bg-success" title="Criar um dispositivo">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="table-posDevices">
+                            <!-- Os dados serão inseridos dinamicamente via JavaScript -->
+                            <tr>
+                                <td colspan="9" class="text-center">Nenhum dispositivo registrado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>Made with <i class="bi bi-heart-fill text-danger"></i> by T.I BCW</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Frontend Interface -->
+    <script src="js/frontend.js"></script>
+</body>
+</html> 

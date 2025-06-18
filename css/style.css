@@ -1,0 +1,102 @@
+/* Custom styles */
+html, body {
+    margin: 0;
+    height: 100vh; /* Garante altura total da viewport */
+}
+
+body {
+    display: flex; /* Torna body um flex container */
+    flex-direction: column; /* Organiza os filhos (navbar, main, footer) em coluna */
+    background-color: #f8f9fa;
+}
+
+main {
+    margin-top: 6rem;
+    margin-bottom: 1rem;
+    flex: 1; /* Permite que o main cresça e ocupe o espaço restante vertical */
+    padding-top: 1.5rem; /* Adiciona um pouco de padding no topo */
+    padding-bottom: 1.5rem; /* Adiciona um pouco de padding embaixo */
+    display: flex; /* Torna main um flex container para seus filhos */
+    flex-direction: column; /* Organiza os filhos do main (card, etc) em coluna */
+}
+
+/* Custom colors and styles */
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Sobrescrevendo cores do Bootstrap */
+.bg-dark {
+    background-color: #2044a4 !important;
+}
+
+.table-dark {
+    background-color: #2044a4 !important;
+}
+
+.table-dark th,
+.table-dark td {
+    background-color: #2044a4 !important;
+    border-color: #2044a4 !important;
+}
+
+footer.bg-dark {
+    background-color: #2044a4 !important;
+}
+
+/* Estilização dos inputs no cabeçalho escuro */
+.table-dark .form-control,
+.table-dark .form-select {
+    background-color: #ffffff;
+    border: 1px solid #2044a4;
+}
+
+.table-dark .form-control:focus,
+.table-dark .form-select:focus {
+    border-color: #2044a4;
+    box-shadow: 0 0 0 0.25rem rgba(32, 68, 164, 0.25);
+}
+
+tr.filtros {
+    background-color: #2044a4 !important;
+}
+
+tr.filtros td {
+    border-color: #2044a4 !important;
+}
+
+nav{
+    height: 6rem;
+}
+
+footer{
+    height: 3rem;
+}
+
+/* Estilos do Login */
+.login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header img {
+    max-width: 120px;
+    margin-bottom: 1rem;
+}
