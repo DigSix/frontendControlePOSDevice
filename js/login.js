@@ -1,4 +1,4 @@
-const API_URL = 'https://backendcontroleposdevice.onrender.com:3000';
+const API_URL = 'https://backendcontroleposdevice.onrender.com:3000/api';
 
 
 
