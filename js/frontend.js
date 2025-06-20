@@ -1,5 +1,5 @@
 // Configuração do Axios
-const API_URL = '';
+const API_URL = 'https://backendcontroleposdevice.onrender.com';
 
 
 
