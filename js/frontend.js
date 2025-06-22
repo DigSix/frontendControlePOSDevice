@@ -43,17 +43,19 @@ function showDevices(devices){
 async function checkLogin() {
     try {
         const test1 = await axios.post(`${API_URL}/login`, {
-            login: localStorage.getItem("username"),
-            password: localStorage.getItem("password")
-        });
-
-        const test2 = await axios.post(`${API_URL}/login`, {
             login: sessionStorage.getItem("username"),
             password: sessionStorage.getItem("password")
         });
 
-        if (!test1.data.success || !test2.data.success) {
-            window.location.href = 'login.html';
+        if (!test1.data.success){
+            const test2 = await axios.post(`${API_URL}/login`, {
+                login: localStorage.getItem("username"),
+                password: localStorage.getItem("password")
+            });
+            if(!test2.data.success){
+                window.location.href = 'login.html';
+           }
+            
         }
     } catch (error) {
         console.error('Erro ao fazer login:', error);
@@ -83,6 +85,13 @@ async function createDevice(){
             const editCreateModal = new bootstrap.Modal('#editCreateModal', {
                 keyboard: false
             })
+
+            document.getElementById("editCreateModalLabel").textContent = `Criando:`;
+            document.getElementById("deviceSerialDisplay").style.display = "block";
+            document.getElementById("deviceLogicalDisplay").style.display = "block";
+            document.getElementById("deviceReciveDateDisplay").style.display = "block";
+
+
             editCreateModal.show();
             const saveBtn = document.getElementById("btn-save-device");
             saveBtn.onclick = async() => {
