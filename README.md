@@ -1,15 +1,15 @@
-# 🖥️ Frontend - Controle POS Devices
+#  Frontend - Controle POS Devices
 
 Esse é o frontend do sistema que desenvolvi para ajudar a mim e os outros técnicos do time a controlar os POS (maquininhas) que entram e saem do estoque. Antes era tudo feito em planilha.
 
-[🖥️ Página do sistema](https://digsix.github.io/frontendControlePOSDevice/)
+[ Página do sistema](https://digsix.github.io/frontendControlePOSDevice/)
 - Login: admin, Senha: admin
 
-[📡 Back-end](https://github.com/DigSix/backendControlePOSDevice)
+[ Back-end](https://github.com/DigSix/backendControlePOSDevice)
 
 ---
 
-## ✨ O que dá pra fazer
+##  O que dá pra fazer
 
 - Visualizar os dispositivos cadastrados
 - Filtrar por status, número de série, protocolo e datas
@@ -19,7 +19,7 @@ Esse é o frontend do sistema que desenvolvi para ajudar a mim e os outros técn
 
 ---
 
-## 🚀 Tecnologias que usei
+##  Tecnologias que usei
 
 ### Front:
 - HTML
