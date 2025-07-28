@@ -1,26 +1,26 @@
 // Configuração do Axios
-const API_URL = 'https://backendcontroleposdevice.onrender.com/api';
+const API_URL = "http://localhost:3000/api";
 
 
 
 
 
 function clearLoign(){
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('password');
-    localStorage.removeItem('username');
-    localStorage.removeItem('password');
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("password");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
 }
 
 function clearDevices(){
-    const tbody = document.getElementById('table-posDevices');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("table-posDevices");
+    tbody.innerHTML = "";
 }
 
 function showDevices(devices){
     devices.forEach(device => {
-        const tbody = document.getElementById('table-posDevices');
-        const tr = document.createElement('tr');
+        const tbody = document.getElementById("table-posDevices");
+        const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${device.serialNumber}</td>
             <td>${device.logicalNumber}</td>
@@ -53,13 +53,13 @@ async function checkLogin() {
                 password: localStorage.getItem("password")
             });
             if(!test2.data.success){
-                window.location.href = 'login.html';
+                window.location.href = "login.html";
            }
             
         }
     } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        alert('Erro ao fazer login. Por favor, tente novamente.');
+        console.error("Erro ao fazer login:", error);
+        alert("Erro ao fazer login. Por favor, tente novamente.");
     }
 }
 
@@ -71,10 +71,10 @@ async function loadDevices() {
 
         clearDevices();
         showDevices(devices);
-        storegedDevices();
+        storagedDevices();
 
     } catch (error) {
-        console.error('Erro ao carregar dispositivos:', error);
+        console.error("Erro ao carregar dispositivos:", error);
     }
 }
 
@@ -82,7 +82,7 @@ async function createDevice(){
     try{
         const createBtn = document.getElementById("btn-create");
         createBtn.onclick = () => {
-            const editCreateModal = new bootstrap.Modal('#editCreateModal', {
+            const editCreateModal = new bootstrap.Modal("#editCreateModal", {
                 keyboard: false
             })
 
@@ -99,11 +99,11 @@ async function createDevice(){
                     const posDevice = {
                         serialNumber: document.getElementById("creatingSerialNumber").value,
                         logicalNumber: document.getElementById("creatingLogicalNumber").value,
-                        reciveDate: document.getElementById('creatingReciveDate').value,
-                        status: document.getElementById('creatingStatus').value,
-                        changeReason: document.getElementById('creatingChangeReason').value,
-                        protocol: document.getElementById('creatingProtocol').value,
-                        exitDate: document.getElementById('creatingExitDate').value
+                        reciveDate: document.getElementById("creatingReciveDate").value,
+                        status: document.getElementById("creatingStatus").value,
+                        changeReason: document.getElementById("creatingChangeReason").value,
+                        protocol: document.getElementById("creatingProtocol").value,
+                        exitDate: document.getElementById("creatingExitDate").value
                     };
     
                     await axios.post(`${API_URL}/createDevice`, posDevice);
@@ -117,8 +117,8 @@ async function createDevice(){
         };
     }
     catch (error) {
-        console.error('Erro ao abrir modal de criação:', error);
-        alert('Não foi possível abrir o formulário de criação de dispositivo.');
+        console.error("Erro ao abrir modal de criação:", error);
+        alert("Não foi possível abrir o formulário de criação de dispositivo.");
     }
 }
 
@@ -127,11 +127,11 @@ async function filterDevices(){
         const posDevice = {
             serialNumber: document.getElementById("filteringSerialNumber").value,
             logicalNumber: document.getElementById("filteringLogicalNumber").value,
-            reciveDate: document.getElementById('filteringReciveDate').value,
-            status: document.getElementById('filteringStatus').value,
-            changeReason: document.getElementById('filteringChangeReason').value,
-            protocol: document.getElementById('filteringProtocol').value,
-            exitDate: document.getElementById('filteringExitDate').value
+            reciveDate: document.getElementById("filteringReciveDate").value,
+            status: document.getElementById("filteringStatus").value,
+            changeReason: document.getElementById("filteringChangeReason").value,
+            protocol: document.getElementById("filteringProtocol").value,
+            exitDate: document.getElementById("filteringExitDate").value
         };
         const resDevices = await axios.post(`${API_URL}/filterDevices`, posDevice);
         console.log(resDevices.data);
@@ -147,12 +147,12 @@ async function filterDevices(){
 
 async function editDevice() {
     try {
-        const tableBody = document.getElementById('table-posDevices');
+        const tableBody = document.getElementById("table-posDevices");
 
-        tableBody.addEventListener('click', (event) => {
-            const clickedButton = event.target.closest('#btn-edit');
+        tableBody.addEventListener("click", (event) => {
+            const clickedButton = event.target.closest("#btn-edit");
             if (clickedButton) {
-                const editCreateModal = new bootstrap.Modal('#editCreateModal', {
+                const editCreateModal = new bootstrap.Modal("#editCreateModal", {
                     keyboard: false
                 });
                 
@@ -172,10 +172,10 @@ async function editDevice() {
                             serialNumber: deviceId,
                             logicalNumber: "",
                             reciveDate: "",
-                            status: document.getElementById('creatingStatus').value,
-                            changeReason: document.getElementById('creatingChangeReason').value,
-                            protocol: document.getElementById('creatingProtocol').value,
-                            exitDate: document.getElementById('creatingExitDate').value
+                            status: document.getElementById("creatingStatus").value,
+                            changeReason: document.getElementById("creatingChangeReason").value,
+                            protocol: document.getElementById("creatingProtocol").value,
+                            exitDate: document.getElementById("creatingExitDate").value
                         };
                         await axios.post(`${API_URL}/editDevice`, posDevice);
                         editCreateModal.hide();
@@ -193,10 +193,10 @@ async function editDevice() {
     }
 }
 
-async function storegedDevices() {
+async function storagedDevices() {
     try {
         const span = document.getElementById("qtd-estoque");
-        const response = await axios.get(`${API_URL}/storegedDevices`);
+        const response = await axios.get(`${API_URL}/storagedDevices`);
         const valor = response.data.quantity;
         span.innerText = valor;
         setEstoqueGradient(valor);
@@ -241,7 +241,7 @@ function setEstoqueGradient(valor) {
 }
 
 // Carrega os dispositivos quando a página carregar
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     checkLogin();
     loadDevices();
     createDevice();
@@ -249,18 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adiciona evento de filtro automático
     const filterFields = [
-        'filteringSerialNumber',
-        'filteringLogicalNumber',
-        'filteringReciveDate',
-        'filteringStatus',
-        'filteringChangeReason',
-        'filteringProtocol',
-        'filteringExitDate'
+        "filteringSerialNumber",
+        "filteringLogicalNumber",
+        "filteringReciveDate",
+        "filteringStatus",
+        "filteringChangeReason",
+        "filteringProtocol",
+        "filteringExitDate"
     ];
     filterFields.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-            el.addEventListener('input', filterDevices);
+            el.addEventListener("input", filterDevices);
         }
     });
 });
