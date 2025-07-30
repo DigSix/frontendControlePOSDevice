@@ -22,3 +22,8 @@ export async function getStorageQuantity() {
     const res = await api.get("/storagedDevices");
     return res.data.quantity;
 }
+
+export async function getBrokenQuantity() {
+    const res = await api.get("/brokenDevices");
+    return res.data.quantity;
+}
