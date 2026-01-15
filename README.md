@@ -1,38 +1,35 @@
-#  Frontend - Controle POS Devices
+## POS Device Control — Frontend
+[Backend repository](https://github.com/DigSix/backendControlePOSDevice)
 
-Esse é o frontend do sistema que desenvolvi para ajudar a mim e os outros técnicos do time a controlar os POS (maquininhas) que entram e saem do estoque. Antes era tudo feito em planilha.
+## About
 
-[ Página do sistema](https://digsix.github.io/frontendControlePOSDevice/)
-- Login: admin, Senha: admin
+This repository contains the frontend for a system built to manage **POS devices** (card terminals) moving in and out of stock.
 
-[ Back-end](https://github.com/DigSix/backendControlePOSDevice)
+It was designed to replace a spreadsheet-based workflow and provide a clearer, more structured interface for technicians to view, filter, and update device information.
 
----
+## What it does
 
-##  O que dá pra fazer
+- Displays registered POS devices  
+- Filters devices by status, serial number, protocol, and dates  
+- Allows editing device information via modal dialogs  
+- Basic authentication with a static user  
+- Responsive interface (best experience on larger screens)  
 
-- Visualizar os dispositivos cadastrados
-- Filtrar por status, número de série, protocolo e datas
-- Editar as informações pelo modal
-- Login básico com usuário fixo
-- Interface responsiva (funciona melhor nas telas maiores)
+## Stack
 
----
+**Frontend**
+- HTML  
+- CSS (Bootstrap)  
+- JavaScript (vanilla)  
+- Axios  
 
-##  Tecnologias que usei
+**Backend (API integration)**
+- Node.js + Express (hosted on Render)  
+- MySQL (hosted on Railway)  
 
-### Front:
-- HTML
-- CSS com Bootstrap
-- JavaScript puro (sem framework)
-- Axios pra fazer as requisições
+## Status
 
-### Backend (ligado via API):
-- Node.js + Express (hospedado no Render)
-- MySQL (banco hospedado no Railway)
+This project is still evolving.  
+The core interface and workflows are in place, serving as a foundation for usability improvements and feature expansion.
 
----
-
-## ❤️ Melhorias
-
-O projeto está longe de estar concluído, ainda tenho muita melhoria a ser feita, mas, já pude aprender muito com cada etapa, sempre fazendo tudo com carinho. Contei com ajuda de IA e dos meus amigos da faculdade e trabalho.
+Maintained by [DigSix](https://github.com/DigSix)
